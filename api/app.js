@@ -4,9 +4,6 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var cors = require("cors");
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
-var testAPIRouter = require("./routes/testAPI");
 var app = express();
 
 // view engine setup
@@ -20,10 +17,18 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
-app.use("/testAPI", testAPIRouter);
-// catch 404 and forward to error handler
+app.get('/', function (req, res) {
+  res.render('index', { title: 'Express' });
+});
+
+app.get('/python', async (req, res) => {
+  const spawn = require('child_process').spawn;
+  const pythonProcess = spawn('python', ['./main.py', req.query.age]);
+  pythonProcess.stdout.on('data', (data) => {
+    console.log(data.toString())
+  });
+});
+
 app.use(function(req, res, next) {
   next(createError(404));
 });
