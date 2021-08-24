@@ -1,3 +1,4 @@
+#I used a tutorial to help me write the code - not completely original
 import sys
 import pandas as pd
 from sklearn.tree import DecisionTreeClassifier
@@ -10,4 +11,4 @@ model = DecisionTreeClassifier()
 model.fit(X, y)
 predictions = model.predict([ [sys.argv[1]] ])
 
-print(predictions)
+print(predictions[0])

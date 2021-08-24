@@ -59,6 +59,19 @@
       input::placeholder {
         color: rgb(196, 196, 196);
       }
+
+      .surrounding {
+        display: 'flex';
+        flex-direction: 'row';
+        justify-content: 'center';
+
+        button {
+          margin-left: 20px;
+          margin-right: 20px;
+          margin-top: 0;
+          margin-bottom: 10px;
+        }
+      }
     }
   }
 }
