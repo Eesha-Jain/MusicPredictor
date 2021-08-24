@@ -8,6 +8,8 @@ function App() {
   const [formDisplay3, setFormDisplay3] = useState("none");
   const [message, setMessage] = useState("");
   const [genre, setGenre] = useState("Loading...");
+  const [newGenre, setNewGenre] = useState("");
+  let justGenre = "";
 
   const submit = e => {
     e.preventDefault();
@@ -15,6 +17,8 @@ function App() {
     setFormDisplay2("block");
 
     fetch('http://localhost:9000/python?age=' + age).then(req => req.json()).then(res => {
+      justGenre = res.data;
+
       setGenre(
         <div>
           <p style={{fontSize: 16}}>Is your favorite genre {res.data}?</p>
@@ -27,16 +31,24 @@ function App() {
     });
   }
 
+  const addValue = (e) => {
+    e.preventDefault();
+    setFormDisplay3("none");
+    setMessage("Thanks for making our modeling better for you and future users!");
+    fetch('http://localhost:9000/addValue?age=' + age + "&genre=" + newGenre);
+  }
+
   const yes = () => {
     setFormDisplay2("none");
-    setFormDisplay3("block");
-    setMessage(<div><p>Thanks for letting us know that our predictions were correct!</p></div>);
+    setFormDisplay3("none");
+    setMessage("Thanks for letting us know that our predictions were correct!");
+    fetch('http://localhost:9000/addValue?age=' + age + "&genre=" + justGenre);
   }
 
   const no = () => {
     setFormDisplay2("none");
     setFormDisplay3("block");
-    setMessage(<div><p>Sorry to hear that. Please let us know your real favorite genre so we can fix that:</p></div>);
+    setMessage("Sorry to hear that. Please let us know your real favorite genre so we can fix that:");
   }
   
   return (
@@ -56,8 +68,13 @@ function App() {
               {genre}
             </div>
 
-            <div style={{display: formDisplay3}}>
-              {message}
+            <div>
+              <p>{message}</p>
+              <form onSubmit={addValue} style={{display: formDisplay3}}>
+                <input type="text" value={newGenre} onChange={(e) => setNewGenre(e.target.value)} required/>
+                <br />
+                <button type="submit">Submit</button>
+              </form>
             </div>
           </div>
         </div>

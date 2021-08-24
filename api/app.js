@@ -29,6 +29,12 @@ app.get('/python', async (req, res) => {
   });
 });
 
+app.get('/addValue', async (req, res) => {
+  const spawn = require('child_process').spawn;
+  const pythonProcess = spawn('python', ['./python/add.py', req.query.age, req.query.genre]);
+  pythonProcess.stdout.on('data', (data) => {});
+});
+
 app.use(function(req, res, next) {
   next(createError(404));
 });
