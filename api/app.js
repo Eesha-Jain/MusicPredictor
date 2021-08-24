@@ -23,7 +23,7 @@ app.get('/', function (req, res) {
 
 app.get('/python', async (req, res) => {
   const spawn = require('child_process').spawn;
-  const pythonProcess = spawn('python', ['./main.py', req.query.age]);
+  const pythonProcess = spawn('python', ['./python/ml.py', req.query.age]);
   pythonProcess.stdout.on('data', (data) => {
     res.status(200).send(JSON.stringify({data: data.toString()}));
   });
