@@ -2,7 +2,7 @@ import '../scss/App.scss';
 import {useState} from 'react';
 
 function App() {
-  const [age, setAge] = useState(15);
+  const [age, setAge] = useState();
   const [formDisplay1, setFormDisplay1] = useState("block");
   const [formDisplay2, setFormDisplay2] = useState("none");
   const [formDisplay3, setFormDisplay3] = useState("none");
